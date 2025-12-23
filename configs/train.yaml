@@ -1,0 +1,74 @@
+# Training Configuration
+# This file contains all training-related parameters
+
+# Model Configuration
+model:
+  name: "CTScanClassifier"
+  backbone: "resnet18"
+  num_classes: 2
+  pretrained: true
+  dropout: 0.5
+
+# Data Configuration
+data:
+  data_dir: "data"
+  batch_size: 8
+  num_workers: 4
+  train_split: 0.7
+  val_split: 0.15
+  test_split: 0.15
+  slice_mode: true
+  target_size: [224, 224]
+
+# Training Configuration
+training:
+  num_epochs: 50
+  learning_rate: 0.001
+  weight_decay: 1e-4
+  optimizer: "adam"
+  scheduler: "cosine"
+  early_stopping_patience: 10
+
+# Loss Configuration
+loss:
+  name: "combined"
+  ce_weight: 0.5
+  focal_weight: 0.5
+  focal_gamma: 2.0
+  focal_alpha: null
+
+# Data Augmentation
+augmentation:
+  train:
+    horizontal_flip: 0.5
+    rotation: 10
+    brightness: 0.1
+    contrast: 0.1
+  val:
+    horizontal_flip: 0.0
+    rotation: 0
+    brightness: 0.0
+    contrast: 0.0
+
+# Checkpointing
+checkpointing:
+  save_dir: "checkpoints"
+  save_best: true
+  save_last: true
+  save_frequency: 5
+
+# Logging
+logging:
+  log_dir: "logs"
+  log_frequency: 10
+  use_tensorboard: true
+  use_wandb: false
+
+# Device Configuration
+device:
+  use_cuda: true
+  use_mps: true
+  fallback_cpu: true
+
+# Reproducibility
+seed: 42
